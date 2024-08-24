@@ -6,16 +6,16 @@ Bun aims to be a compatible JavaScript runtime with Node.js. Since the ecosystem
 
 ```sh
 bun install -g go-bun # Global installation
-bunx go-bun # One-time usage
+sudo bunx go-bun # One-time usage
 ```
 
 The following commands are available to switch and verify executables.
 
 ```sh
 # Link "node", "npm" and "npx" executables to Bun.
-go-bun / bunx go-bun
+sudo go-bun / sudo bunx go-bun
 # Link "node", "npm" and "npx" back to Node.js.
-go-node / bunx go-bun go-node
+sudo go-node / sudo bunx go-bun go-node
 # Check where current executables point to.
 check-runtime / bunx go-bun check-runtime
 ```

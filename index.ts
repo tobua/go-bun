@@ -49,8 +49,6 @@ if (!binFiles.includes('_node')) {
 
 rmSync(getBinPath('node'))
 
-console.log('TEST')
-
 function getUserHomeDirectory() {
   try {
     const userHomeDir = execSync('echo ${SUDO_USER}').toString().trim()
@@ -61,15 +59,12 @@ function getUserHomeDirectory() {
   }
 }
 
-const userHomeDirectory = getUserHomeDirectory()
-const bunBinPath = (bin: 'bun' | 'bunx') => join(userHomeDirectory, `.bun/bin/${bin}`)
+const bunBinPath = (bin: 'bun' | 'bunx') => join(getUserHomeDirectory(), `.bun/bin/${bin}`)
 
 if (!existsSync(bunBinPath('bun'))) {
   console.log(`bun installation not found in ${bunBinPath}`)
   process.exit(0)
 }
-
-console.log(`User home directory: ${userHomeDirectory}`)
 
 function createSymlink(from: 'node' | 'npm' | 'npx', to: 'bun' | 'bunx') {
   try {

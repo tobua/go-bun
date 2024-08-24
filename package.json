@@ -22,6 +22,7 @@
     "go-node": "./node.ts"
   },
   "files": [
+    "check",
     "*.ts"
   ],
   "publishConfig": {
@@ -41,6 +42,11 @@
             "noConsoleLog": "off"
           }
         }
+      },
+      "files": {
+        "ignore": [
+          "scripts"
+        ]
       }
     },
     "typescript": {
@@ -49,7 +55,9 @@
         "jsx": "react-jsx"
       },
       "files": [
-        "index.ts"
+        "index.ts",
+        "node.ts",
+        "check.ts"
       ]
     }
   }
