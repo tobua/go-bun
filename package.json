@@ -1,0 +1,56 @@
+{
+  "name": "go-bun",
+  "scripts": {
+    "check": "biome check --write .",
+    "check-runtime": "bun check.ts",
+    "go-bun": "sudo bun index.ts",
+    "go-node": "sudo bun node.ts",
+    "types": "tsc"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.8.3",
+    "@types/bun": "^1.1.7",
+    "typescript": "^5.5.4",
+    "zero-configuration": "^0.17.3"
+  },
+  "trustedDependencies": [
+    "zero-configuration"
+  ],
+  "bin": {
+    "check-runtime": "./check.ts",
+    "go-bun": "./index.ts",
+    "go-node": "./node.ts"
+  },
+  "files": [
+    "*.ts"
+  ],
+  "publishConfig": {
+    "provenance": false
+  },
+  "configuration": {
+    "gitignore": "recommended",
+    "vscode": "biome",
+    "biome": {
+      "extends": "recommended",
+      "linter": {
+        "rules": {
+          "correctness": {
+            "noNodejsModules": "off"
+          },
+          "suspicious": {
+            "noConsoleLog": "off"
+          }
+        }
+      }
+    },
+    "typescript": {
+      "extends": "plugin",
+      "compilerOptions": {
+        "jsx": "react-jsx"
+      },
+      "files": [
+        "index.ts"
+      ]
+    }
+  }
+}
