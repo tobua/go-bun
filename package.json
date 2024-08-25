@@ -1,5 +1,10 @@
 {
   "name": "go-bun",
+  "description": "Point the Node.js JavaScript Runtime executable to Bun to ensure code runs with Bun.",
+  "version": "0.0.0-development",
+  "repository": "github:tobua/go-bun",
+  "license": "MIT",
+  "author": "Matthias Giger",
   "scripts": {
     "check": "biome check --write .",
     "check-runtime": "bun check.ts",
@@ -9,13 +14,14 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^1.8.3",
-    "@types/bun": "^1.1.7",
+    "@types/bun": "^1.1.8",
     "typescript": "^5.5.4",
     "zero-configuration": "^0.17.3"
   },
   "trustedDependencies": [
     "zero-configuration"
   ],
+  "type": "module",
   "bin": {
     "check-runtime": "./check.ts",
     "go-bun": "./index.ts",
@@ -25,12 +31,18 @@
     "check",
     "*.ts"
   ],
+  "keywords": [
+    "bun",
+    "executable",
+    "path"
+  ],
   "publishConfig": {
-    "provenance": false
+    "provenance": true
   },
   "configuration": {
     "gitignore": "recommended",
     "vscode": "biome",
+    "license": "MIT",
     "biome": {
       "extends": "recommended",
       "linter": {

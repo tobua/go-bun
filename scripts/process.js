@@ -1,5 +1,5 @@
 #!/usr/bin/env node
 import { execSync, spawnSync } from 'node:child_process'
-
-console.log(execSync('node scripts/script.js', { encoding: 'utf-8' }).trim())
-console.log(spawnSync('node', ['scripts/script.js'], { encoding: 'utf-8' }).stdout.trim())
+// NOTE execSync('node script.js') will ignore the shebang.
+console.log(execSync('scripts/script.js', { encoding: 'utf-8' }).trim())
+console.log(spawnSync('scripts/script.js', [], { encoding: 'utf-8' }).stdout.trim())

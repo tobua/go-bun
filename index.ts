@@ -3,6 +3,25 @@ import { execSync } from 'node:child_process'
 import { existsSync, readdirSync, renameSync, rmSync, symlinkSync } from 'node:fs'
 import { platform } from 'node:os'
 import { join } from 'node:path'
+import Bun from 'bun'
+
+const commands = process.argv
+const fileInPackage = (fileName: string) => join(__dirname, fileName)
+const { bin, name } = await Bun.file(fileInPackage('package.json')).json()
+
+// No way to run other bin scripts with bunx directly.
+function runOtherBinScripts(scriptName: string) {
+  if (!commands.includes(scriptName)) {
+    return
+  }
+
+  execSync(fileInPackage(bin[scriptName]), { stdio: 'inherit' })
+  process.exit(0)
+}
+
+Object.keys(bin)
+  .filter((scriptName) => scriptName !== name)
+  .forEach(runOtherBinScripts)
 
 const binPathMac = '/usr/local/bin'
 
@@ -47,7 +66,9 @@ if (!binFiles.includes('_node')) {
   }
 }
 
-rmSync(getBinPath('node'))
+if (existsSync(getBinPath('node'))) {
+  rmSync(getBinPath('node'))
+}
 
 function getUserHomeDirectory() {
   try {
@@ -62,7 +83,7 @@ function getUserHomeDirectory() {
 const bunBinPath = (bin: 'bun' | 'bunx') => join(getUserHomeDirectory(), `.bun/bin/${bin}`)
 
 if (!existsSync(bunBinPath('bun'))) {
-  console.log(`bun installation not found in ${bunBinPath}`)
+  console.log(`bun installation not found in ${bunBinPath('bun')}`)
   process.exit(0)
 }
 
@@ -74,7 +95,7 @@ function createSymlink(from: 'node' | 'npm' | 'npx', to: 'bun' | 'bunx') {
       console.log(`Removed existing file or link at ${binPath}`)
     }
     symlinkSync(bunBinPath(to), binPath)
-    console.log(`Symlink created from ${binPath} to ${bunBinPath}`)
+    console.log(`Symlink created from ${binPath} to ${bunBinPath(to)}`)
   } catch (error) {
     if ((error as { code: string }).code === 'EACCES') {
       console.error('Permission denied. Please run the script with sudo "sudo go-bun".')
