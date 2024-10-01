@@ -13,10 +13,10 @@
     "types": "tsc"
   },
   "devDependencies": {
-    "@biomejs/biome": "^1.8.3",
-    "@types/bun": "^1.1.8",
-    "typescript": "^5.5.4",
-    "zero-configuration": "^0.17.3"
+    "@biomejs/biome": "^1.9.3",
+    "@types/bun": "^1.1.10",
+    "typescript": "^5.6.2",
+    "zero-configuration": "^0.17.5"
   },
   "trustedDependencies": [
     "zero-configuration"
@@ -44,17 +44,7 @@
     "vscode": "biome",
     "license": "MIT",
     "biome": {
-      "extends": "recommended",
-      "linter": {
-        "rules": {
-          "correctness": {
-            "noNodejsModules": "off"
-          },
-          "suspicious": {
-            "noConsoleLog": "off"
-          }
-        }
-      },
+      "extends": "server",
       "files": {
         "ignore": [
           "scripts"
