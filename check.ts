@@ -25,8 +25,6 @@ console.log('')
 
 const regularScript = execSync('bun scripts/script.js', { encoding: 'utf-8' }).trim() === 'true'
 
-console.log(execSync('bun scripts/script.js', { encoding: 'utf-8' }).trim())
-
 if (regularScript) {
   console.log('✅ Regular script with node shebang executed with Bun')
 } else {
