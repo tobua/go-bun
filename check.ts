@@ -1,5 +1,5 @@
 #!/usr/bin/env bun
-import { execSync } from 'node:child_process'
+import { execSync, spawnSync } from 'node:child_process'
 import { styleText } from 'node:util'
 
 console.log(styleText('bold', 'Checking JavaScript runtime...'))
@@ -23,7 +23,8 @@ console.log('Make sure to update bun with "bun upgrade".')
 
 console.log('')
 
-const regularScript = execSync('bun scripts/script.js', { encoding: 'utf-8' }).trim() === 'true'
+// execSync "bun scripts/script.js" will ignore the shebang.
+const regularScript = spawnSync('scripts/script.js', { encoding: 'utf-8', shell: true }).stdout.trim() === 'true'
 
 if (regularScript) {
   console.log('✅ Regular script with node shebang executed with Bun')

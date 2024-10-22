@@ -4,6 +4,7 @@ import { existsSync, readdirSync, renameSync, rmSync, symlinkSync } from 'node:f
 import { platform } from 'node:os'
 import { join } from 'node:path'
 import Bun from 'bun'
+import { getRuntimePath } from './helper'
 
 const commands = process.argv
 const fileInPackage = (fileName: string) => join(__dirname, fileName)
@@ -23,7 +24,7 @@ Object.keys(bin)
   .filter((scriptName) => scriptName !== name)
   .forEach(runOtherBinScripts)
 
-const binPathMac = '/usr/local/bin'
+const binPath = getRuntimePath('node')
 
 if (platform() !== 'darwin') {
   console.warn('Warning: This script has only been tested on macOS.')
@@ -33,12 +34,12 @@ function getBinFiles() {
   const result: string[] = []
 
   try {
-    const files = readdirSync(binPathMac)
+    const files = readdirSync(binPath)
     for (const file of files) {
       result.push(file)
     }
   } catch (_error) {
-    console.error(`Error reading directory ${binPathMac}.`)
+    console.error(`Error reading directory ${binPath}.`)
   }
 
   return result
@@ -47,15 +48,15 @@ function getBinFiles() {
 const binFiles = getBinFiles()
 
 if (!(binFiles.includes('node') && binFiles.includes('npx') && binFiles.includes('npm'))) {
-  console.log(`node installation not found in ${binPathMac}`)
+  console.log(`node installation not found in ${binPath}`)
   process.exit(0)
 }
 
-const getBinPath = (bin: 'node' | 'npm' | 'npx') => `${binPathMac}/${bin}`
+const getBinPath = (bin: 'node' | 'npm' | 'npx') => `${binPath}/${bin}`
 
 if (!binFiles.includes('_node')) {
   try {
-    renameSync(getBinPath('node'), `${binPathMac}/_node`)
+    renameSync(getBinPath('node'), `${binPath}/_node`)
   } catch (error) {
     if ((error as { code: string }).code === 'EACCES') {
       console.error('Permission denied. Please run the script with sudo "sudo go-bun".')
